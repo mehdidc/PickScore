@@ -63,6 +63,7 @@ class CLIPHFDatasetConfig(BaseDatasetConfig):
     limit_examples_per_prompt: int = -1
     caption_sources: Optional[list] = None
     model_sources: Optional[list] = None
+    origin: Optional[list] = None
 
     only_on_best: bool = False
 
@@ -101,6 +102,11 @@ class CLIPHFDataset(BaseDataset):
         if self.cfg.caption_sources is not None:
             logger.info(f"Keeping only examples from {self.cfg.caption_sources} caption sources")
             self.dataset = self.dataset.filter(lambda x: x["caption_source"] in self.cfg.caption_sources)
+            logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
+        
+        if self.cfg.origin is not None:
+            logger.info(f"Keeping only examples from {self.cfg.origin} dataset origins")
+            self.dataset = self.dataset.filter(lambda x: x["origin"] in self.cfg.origin)
             logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
         
         if self.cfg.model_sources is not None:
