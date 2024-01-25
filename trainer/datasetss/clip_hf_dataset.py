@@ -32,8 +32,8 @@ class CLIPHFDatasetConfig(BaseDatasetConfig):
 
     from_disk: bool = False
     train_split_name: str = "train"
-    valid_split_name: str = "validation_unique"
-    test_split_name: str = "test_unique"
+    valid_split_name: str = "validation"
+    test_split_name: str = "test"
     cache_dir: Optional[str] = None
 
     caption_column_name: str = "caption"
@@ -53,10 +53,16 @@ class CLIPHFDatasetConfig(BaseDatasetConfig):
     keep_only_different: bool = False
     keep_only_with_label: bool = False
     keep_only_with_label_in_non_train: bool = True
+    
+    dataset_size_train: Optional[int] = None
+    dataset_size_validation: Optional[int] = None
+    dataset_size_test: Optional[int] = None
 
     processor: ProcessorConfig = ProcessorConfig()
 
     limit_examples_per_prompt: int = -1
+    caption_sources: Optional[list] = None
+    model_sources: Optional[list] = None
 
     only_on_best: bool = False
 
@@ -91,6 +97,22 @@ class CLIPHFDataset(BaseDataset):
             df = df.groupby(self.cfg.caption_column_name).head(self.cfg.limit_examples_per_prompt)
             logger.info(f"Kept {len(df)} examples from {self.split} dataset")
             self.dataset = Dataset.from_pandas(df)
+        
+        if self.cfg.caption_sources is not None:
+            logger.info(f"Keeping only examples from {self.cfg.caption_sources} caption sources")
+            self.dataset = self.dataset.filter(lambda x: x["caption_source"] in self.cfg.caption_sources)
+            logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
+        
+        if self.cfg.model_sources is not None:
+            logger.info(f"Keeping only examples from {self.cfg.model_sources} model sources")
+            #print(self.dataset.to_pandas().model_0.unique())
+            #print(self.dataset.to_pandas().model_1.unique())
+            #D = self.dataset.to_pandas()
+            #D = D[D.model_0.isin(self.cfg.model_sources) & D.model_1.isin(self.cfg.model_sources)]
+            #print("LEN ", len(D))
+            self.dataset = self.dataset.filter(lambda x: x["model_0"] in self.cfg.model_sources and x["model_1"] in self.cfg.model_sources)
+            logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
+        
 
         if self.cfg.only_on_best and self.split == self.cfg.train_split_name:
             logger.info(f"Keeping only best examples for training")
@@ -127,6 +149,13 @@ class CLIPHFDataset(BaseDataset):
             self.uid2index = uid2index
             self.uid2image_col_name = uid2image_col_name
 
+        dataset_size = getattr(self.cfg, f"dataset_size_{self.split}", None)
+        if dataset_size is not None:
+            logger.info(f"Keeping only {dataset_size} examples")
+            self.dataset = Dataset.from_pandas(self.dataset.to_pandas().iloc[:dataset_size])
+            logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
+
+
         logger.info(f"Loaded {len(self.dataset)} examples from {self.split} dataset")
 
         processor = instantiate(cfg.processor)
@@ -137,9 +166,10 @@ class CLIPHFDataset(BaseDataset):
         if self.cfg.from_disk:
             dataset = load_from_disk(self.cfg.dataset_name)[split]
         else:
+            print(self.cfg.dataset_name, self.cfg.dataset_config_name, self.cfg.cache_dir, split)
             dataset = load_dataset(
                 self.cfg.dataset_name,
-                self.cfg.dataset_config_name,
+                # self.cfg.dataset_config_name,
                 cache_dir=self.cfg.cache_dir,
                 split=split
             )

@@ -1,4 +1,15 @@
-# PickScore
+# Enhancing Compositionality with fine-tuning on human preference datasets
+
+to quickly run a test, do:
+
+`accelerate launch trainer/scripts/train.py +experiment=compositionality_example output_dir=compositionality_example_output`
+
+
+This reads the config file in [trainer/conf/compositionality_example.yaml]. 
+
+
+
+# PickScore (original)
 This repository contains the code for the paper [Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation](https://arxiv.org/abs/2305.01569). 
 
 We also open-source the [Pick-a-Pic v2 dataset](https://huggingface.co/datasets/yuvalkirstain/pickapic_v2) (with more than a million examples), [Pick-a-Pic v1 dataset](https://huggingface.co/datasets/yuvalkirstain/pickapic_v1) (which is the original dataset used in the paper), and [PickScore model](https://huggingface.co/yuvalkirstain/PickScore_v1) (trained on the v1 dataset). We encourage readers to experiment with the [Pick-a-Pic's web application](https://pickapic.io/) and contribute to the dataset.
