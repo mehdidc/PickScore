@@ -2,8 +2,9 @@
 
 to quickly run a test, do:
 
-`accelerate launch trainer/scripts/train.py +experiment=compositionality_example output_dir=compositionality_example_output`
-
+```bash
+accelerate launch trainer/scripts/train.py +experiment=compositionality_example output_dir=compositionality_example_output
+```
 
 This reads the config file in [trainer/conf/compositionality_example.yaml](trainer/conf/experiment/compositionality_example.yaml). 
 
