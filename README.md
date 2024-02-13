@@ -8,7 +8,11 @@ accelerate launch trainer/scripts/train.py +experiment=compositionality_example 
 
 This reads the config file in [trainer/conf/compositionality_example.yaml](trainer/conf/experiment/compositionality_example.yaml). 
 
-
+## Running stuff on the cambridge cluster
+run this:
+```bash
+accelerate launch --dynamo_backend no --gpu_ids all --num_processes 1  --num_machines 1 --use_deepspeed trainer/scripts/train.py +experiment=compositionality_example output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs
+```
 
 # PickScore (original)
 This repository contains the code for the paper [Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation](https://arxiv.org/abs/2305.01569). 

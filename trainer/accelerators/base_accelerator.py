@@ -169,6 +169,7 @@ class BaseAccelerator(abc.ABC):
             self.accelerator.init_trackers(self.cfg.project_name, log_cfg)
             logger.info("Training config:")
             print_config(cfg)
+            logger.info(str(cfg))
         logger.info(get_nvidia_smi_gpu_memory_stats_str())
         self.pre_training_log(cfg)
         self.progress_bar = tqdm(range(self.cfg.max_steps * self.cfg.gradient_accumulation_steps), disable=not self.accelerator.is_main_process)

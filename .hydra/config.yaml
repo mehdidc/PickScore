@@ -1,0 +1,141 @@
+accelerator:
+  _target_: trainer.accelerators.deepspeed_accelerator.DeepSpeedAccelerator
+  output_dir: ${output_dir}
+  mixed_precision: BF16
+  gradient_accumulation_steps: 1
+  log_with: WANDB
+  debug:
+    activate: false
+    port: 5900
+  seed: 42
+  resume_from_checkpoint: true
+  max_steps: 4000
+  num_epochs: 10
+  validate_steps: 100
+  eval_on_start: true
+  project_name: experiment
+  max_grad_norm: 1.0
+  save_steps: 100
+  metric_name: accuracy
+  metric_mode: MAX
+  limit_num_checkpoints: 1
+  save_only_if_best: true
+  dynamo_backend: 'NO'
+  keep_best_ckpts: true
+  deepspeed:
+    fp16:
+      enabled: false
+    bf16:
+      enabled: false
+    optimizer:
+      type: AdamW
+      params:
+        lr: auto
+        weight_decay: auto
+        torch_adam: true
+        adam_w_mode: true
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: auto
+        warmup_max_lr: auto
+        warmup_num_steps: auto
+        total_num_steps: auto
+    zero_optimization:
+      stage: 2
+      allgather_partitions: true
+      allgather_bucket_size: 200000000.0
+      overlap_comm: true
+      reduce_scatter: true
+      reduce_bucket_size: 500000000
+      contiguous_gradients: true
+    gradient_accumulation_steps: 16
+    gradient_clipping: 1.0
+    steps_per_print: 1
+    train_batch_size: auto
+    train_micro_batch_size_per_gpu: auto
+    wall_clock_breakdown: false
+  deepspeed_final: null
+task:
+  limit_examples_to_wandb: 50
+  _target_: trainer.tasks.clip_task.CLIPTask
+  pretrained_model_name_or_path: ${model.pretrained_model_name_or_path}
+  label_0_column_name: ${dataset.label_0_column_name}
+  label_1_column_name: ${dataset.label_1_column_name}
+  input_ids_column_name: ${dataset.input_ids_column_name}
+  pixels_0_column_name: ${dataset.pixels_0_column_name}
+  pixels_1_column_name: ${dataset.pixels_1_column_name}
+model:
+  _target_: trainer.models.clip_model.CLIPModel
+  pretrained_model_name_or_path: laion/CLIP-ViT-H-14-laion2B-s32B-b79K
+criterion:
+  _target_: trainer.criterions.clip_criterion.CLIPCriterion
+  is_distributed: true
+  label_0_column_name: ${dataset.label_0_column_name}
+  label_1_column_name: ${dataset.label_1_column_name}
+  input_ids_column_name: ${dataset.input_ids_column_name}
+  pixels_0_column_name: ${dataset.pixels_0_column_name}
+  pixels_1_column_name: ${dataset.pixels_1_column_name}
+  num_examples_per_prompt_column_name: ${dataset.num_examples_per_prompt_column_name}
+  in_batch_negatives: false
+dataset:
+  train_split_name: train
+  valid_split_name: validation
+  test_split_name: test
+  batch_size: 16
+  num_workers: 2
+  drop_last: true
+  _target_: trainer.datasetss.clip_hf_dataset.CLIPHFDataset
+  dataset_name: mehdidc/compositionality-subsample
+  dataset_config_name: 'null'
+  from_disk: false
+  cache_dir: /home/vu214/rds/rds-shared-data-HM7VddDwcug/shared-datasets/reward_models_data
+  caption_column_name: caption
+  input_ids_column_name: input_ids
+  image_0_column_name: jpg_0
+  image_1_column_name: jpg_1
+  label_0_column_name: label_0
+  label_1_column_name: label_1
+  are_different_column_name: are_different
+  has_label_column_name: has_label
+  pixels_0_column_name: pixel_values_0
+  pixels_1_column_name: pixel_values_1
+  num_examples_per_prompt_column_name: num_example_per_prompt
+  keep_only_different: false
+  keep_only_with_label: false
+  keep_only_with_label_in_non_train: true
+  dataset_size_train: 100
+  dataset_size_validation: 10
+  dataset_size_test: 10
+  processor:
+    _target_: transformers.AutoProcessor.from_pretrained
+    pretrained_model_name_or_path: ${model.pretrained_model_name_or_path}
+  limit_examples_per_prompt: -1
+  caption_sources:
+  - pickapic
+  model_sources:
+  - stable-diffusion-xl-beta-v2-2-3
+  - stable-diffusion-xl-beta-v2-2-5-b
+  - yuvalkirstain/dreamlike-photoreal-2-flax
+  - stable-diffusion-xl-beta-v2-2-2
+  - stable-diffusion-xl-beta-v2-2-3-5
+  - stable-diffusion-xl-beta-v2-2-5-f
+  - stable-diffusion-xl-beta-v2-2-5-g
+  - stable-diffusion-xl-v2-2
+  - stable-diffusion-xl-beta-v2-2-5-e
+  - stabilityai/stable-diffusion-2-1
+  origin: null
+  only_on_best: false
+optimizer:
+  _target_: trainer.optimizers.dummy_optimizer.BaseDummyOptim
+  lr: 3.0e-06
+  weight_decay: 0.3
+lr_scheduler:
+  _target_: trainer.lr_schedulers.dummy_lr_scheduler.instantiate_dummy_lr_scheduler
+  lr: ${optimizer.lr}
+  lr_warmup_steps: 500
+  total_num_steps: ${accelerator.max_steps}
+debug:
+  activate: false
+  port: 5900
+output_dir: /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs

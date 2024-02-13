@@ -14,7 +14,7 @@ model:
 
 dataset:
   dataset_name: "mehdidc/compositionality-subsample"
-  cache_dir: "cache/compositionality-subsample"
+  cache_dir: "/home/vu214/rds/rds-shared-data-HM7VddDwcug/shared-datasets/reward_models_data"
   dataset_size_train: 100
   dataset_size_validation: 10
   dataset_size_test: 10
