@@ -1,0 +1,40 @@
+[2024-02-13 15:10:21,069][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-13 15:10:21,069][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-13 15:10:21,087][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs/config.yaml
+[2024-02-13 15:10:21,087][__main__][INFO] - Loading task
+[2024-02-13 15:10:21,272][__main__][INFO] - Loading model
+[2024-02-13 15:10:27,509][__main__][INFO] - Loading criterion
+[2024-02-13 15:10:27,510][__main__][INFO] - Loading optimizer
+[2024-02-13 15:10:27,513][__main__][INFO] - Loading lr scheduler
+[2024-02-13 15:10:27,514][__main__][INFO] - Loading dataloaders
+[2024-02-13 15:10:27,514][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset
+[2024-02-13 15:16:06,495][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-13 15:16:06,511][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-13 15:16:06,530][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs/config.yaml
+[2024-02-13 15:16:06,530][__main__][INFO] - Loading task
+[2024-02-13 15:16:07,136][__main__][INFO] - Loading model
+[2024-02-13 15:16:26,287][__main__][INFO] - Loading criterion
+[2024-02-13 15:16:26,287][__main__][INFO] - Loading optimizer
+[2024-02-13 15:16:26,290][__main__][INFO] - Loading lr scheduler
+[2024-02-13 15:16:26,291][__main__][INFO] - Loading dataloaders
+[2024-02-13 15:16:26,291][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset
+[2024-02-13 15:25:38,951][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-13 15:25:38,972][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-13 15:25:39,006][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs/config.yaml
+[2024-02-13 15:25:39,006][__main__][INFO] - Loading task
+[2024-02-13 15:25:39,237][__main__][INFO] - Loading model
+[2024-02-13 15:25:50,207][__main__][INFO] - Loading criterion
+[2024-02-13 15:25:50,208][__main__][INFO] - Loading optimizer
+[2024-02-13 15:25:50,212][__main__][INFO] - Loading lr scheduler
+[2024-02-13 15:25:50,213][__main__][INFO] - Loading dataloaders
+[2024-02-13 15:25:50,213][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset
+[2024-02-14 00:36:43,791][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-14 00:36:43,792][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-14 00:36:43,810][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs/config.yaml
+[2024-02-14 00:36:43,810][__main__][INFO] - Loading task
+[2024-02-14 00:36:43,992][__main__][INFO] - Loading model
+[2024-02-14 00:36:50,420][__main__][INFO] - Loading criterion
+[2024-02-14 00:36:50,420][__main__][INFO] - Loading optimizer
+[2024-02-14 00:36:50,423][__main__][INFO] - Loading lr scheduler
+[2024-02-14 00:36:50,424][__main__][INFO] - Loading dataloaders
+[2024-02-14 00:36:50,424][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset

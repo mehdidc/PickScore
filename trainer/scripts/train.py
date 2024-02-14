@@ -143,6 +143,8 @@ def main(cfg: TrainerConfig) -> None:
                 accelerator.update_global_step(train_loss)
                 train_loss = 0.0
 
+            logger.info('debug: step: {}, epoch: {}, global_step: {}'.format(step, epoch, accelerator.global_step))
+
             if accelerator.global_step > 0:
                 lr = lr_scheduler.get_last_lr()[0]
 
