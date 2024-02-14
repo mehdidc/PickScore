@@ -118,8 +118,8 @@ def main(cfg: TrainerConfig) -> None:
                 continue
 
             ## HACK: for now removing evaluation to ensure faster training 
-            # if accelerator.should_eval():
-            #     evaluate()
+            if accelerator.should_eval():
+                evaluate()
 
             if accelerator.should_save():
                 accelerator.save_checkpoint()

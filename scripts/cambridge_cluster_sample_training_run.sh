@@ -20,7 +20,7 @@
 #SBATCH --ntasks=1
 #! Specify the number of GPUs per node (between 1 and 4; must be 4 if nodes>1).
 #! Note that the job submission script will enforce no more than 32 cpus per GPU.
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:3
 #! How much wallclock time will be required?
 #SBATCH --time=20:00:00
 #! What types of email messages do you wish to receive?
@@ -56,7 +56,7 @@ module load rhel8/default-amp              # REQUIRED - loads the basic environm
 
 source /home/vu214/.bashrc
 conda activate /home/vu214/rds/hpc-work/conda_envs/pickscoreenv
-accelerate launch --dynamo_backend no --gpu_ids all --num_processes 4  --num_machines 1 --use_deepspeed /home/vu214/PickScore/trainer/scripts/train.py +experiment=compositionality_full output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
+accelerate launch --dynamo_backend no --gpu_ids all --num_processes 3  --num_machines 1 --use_deepspeed /home/vu214/PickScore/trainer/scripts/train.py +experiment=compositionality_full output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
 
 #! Insert additional module load commands after this line if needed:
 

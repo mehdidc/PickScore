@@ -8,6 +8,7 @@ accelerator:
   mixed_precision: BF16
   gradient_accumulation_steps: 16
   max_steps: 3000
+  validate_steps: 500
 
 output_dir: compositionality_example_output
 
