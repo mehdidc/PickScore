@@ -30,6 +30,7 @@
 #! Uncomment this to prevent the job from being requeued (e.g. if
 #! interrupted by node failure or system downtime):
 ##SBATCH --no-requeue
+#SBATCH --exclude=gpu-q-14
 
 #! Do not change:
 #SBATCH -p ampere
