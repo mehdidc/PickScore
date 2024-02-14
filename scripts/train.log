@@ -1,0 +1,18 @@
+[2024-02-14 15:34:13,574][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-14 15:34:13,575][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-14 15:34:13,609][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering/config.yaml
+[2024-02-14 15:34:13,609][__main__][INFO] - Loading task
+[2024-02-14 15:34:13,950][__main__][INFO] - Loading model
+[2024-02-14 15:34:14,063][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=3
+[2024-02-14 15:34:14,063][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=2
+[2024-02-14 15:34:14,068][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=1
+[2024-02-14 15:34:38,559][__main__][INFO] - Loading criterion
+[2024-02-14 15:34:38,560][__main__][INFO] - Loading optimizer
+[2024-02-14 15:34:38,563][__main__][INFO] - Loading lr scheduler
+[2024-02-14 15:34:38,565][__main__][INFO] - Loading dataloaders
+[2024-02-14 15:34:38,565][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset
+[2024-02-14 15:34:44,031][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 1429230 examples from train dataset
+[2024-02-14 15:34:44,032][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 1429230 examples from train dataset
+[2024-02-14 15:34:44,909][trainer.datasetss.clip_hf_dataset][INFO] - Loading validation dataset
+[2024-02-14 15:34:48,991][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 27916 examples from validation dataset
+[2024-02-14 15:34:48,992][trainer.datasetss.clip_hf_dataset][INFO] - Keeping only examples with label in validation split

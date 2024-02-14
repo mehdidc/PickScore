@@ -192,7 +192,9 @@ class BaseAccelerator(abc.ABC):
             self.accelerator.log(data, step=self.global_step)
 
     def recalc_train_length_after_prepare(self, num_batches):
+        logger.info('Total training batches: {}'.format(num_batches))
         num_update_steps_per_epoch = math.ceil(num_batches / self.cfg.gradient_accumulation_steps)
+        logger.info('Number of update steps per epoch: {}'.format(num_update_steps_per_epoch))
         if self.cfg.max_steps is None:
             self.cfg.max_steps = self.cfg.num_epochs * num_update_steps_per_epoch
         self.num_update_steps_per_epoch = num_update_steps_per_epoch
