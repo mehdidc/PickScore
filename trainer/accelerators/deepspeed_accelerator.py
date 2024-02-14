@@ -71,7 +71,7 @@ class DeepSpeedAccelerator(BaseAccelerator):
             gradient_accumulation_steps=self.cfg.gradient_accumulation_steps,
         )
         self.cfg.deepspeed_final = OmegaConf.create(deepspeed_plugin.deepspeed_config)
-        self.cfg.gradient_accumulation_steps = 16
+        # self.cfg.gradient_accumulation_steps = 16
         self.accelerator = Accelerator(
             deepspeed_plugin=deepspeed_plugin,
             gradient_accumulation_steps=self.cfg.gradient_accumulation_steps,

@@ -6,7 +6,7 @@ defaults:
 accelerator:
   project_name: experiment
   mixed_precision: BF16
-  gradient_accumulation_steps: 1
+  gradient_accumulation_steps: 16
 
 output_dir: compositionality_example_output
 

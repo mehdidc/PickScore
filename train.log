@@ -1,0 +1,52 @@
+[2024-02-14 12:13:05,294][trainer.accelerators.base_accelerator][INFO] - Setting seed 42
+[2024-02-14 12:13:05,294][trainer.accelerators.base_accelerator][INFO] - Initialized accelerator: rank=0
+[2024-02-14 12:13:05,343][__main__][INFO] - Config can be found in /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering/config.yaml
+[2024-02-14 12:13:05,343][__main__][INFO] - Loading task
+[2024-02-14 12:13:05,539][__main__][INFO] - Loading model
+[2024-02-14 12:13:11,786][__main__][INFO] - Loading criterion
+[2024-02-14 12:13:11,786][__main__][INFO] - Loading optimizer
+[2024-02-14 12:13:11,789][__main__][INFO] - Loading lr scheduler
+[2024-02-14 12:13:11,790][__main__][INFO] - Loading dataloaders
+[2024-02-14 12:13:11,790][trainer.datasetss.clip_hf_dataset][INFO] - Loading train dataset
+[2024-02-14 12:13:17,236][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 1429230 examples from train dataset
+[2024-02-14 12:13:17,237][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 1429230 examples from train dataset
+[2024-02-14 12:13:18,344][trainer.datasetss.clip_hf_dataset][INFO] - Loading validation dataset
+[2024-02-14 12:13:23,245][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 27916 examples from validation dataset
+[2024-02-14 12:13:23,245][trainer.datasetss.clip_hf_dataset][INFO] - Keeping only examples with label in validation split
+[2024-02-14 12:13:26,027][trainer.datasetss.clip_hf_dataset][INFO] - Kept 25769 examples from validation dataset
+[2024-02-14 12:13:26,027][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 25769 examples from validation dataset
+[2024-02-14 12:13:26,796][trainer.datasetss.clip_hf_dataset][INFO] - Loading test dataset
+[2024-02-14 12:13:31,116][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 83830 examples from test dataset
+[2024-02-14 12:13:31,116][trainer.datasetss.clip_hf_dataset][INFO] - Keeping only examples with label in test split
+[2024-02-14 12:13:37,422][trainer.datasetss.clip_hf_dataset][INFO] - Kept 81505 examples from test dataset
+[2024-02-14 12:13:37,422][trainer.datasetss.clip_hf_dataset][INFO] - Loaded 81505 examples from test dataset
+[2024-02-14 12:13:38,162][accelerate.accelerator][INFO] - Since you passed both train and evaluation dataloader, `is_train_batch_min` (here True will decide the `train_batch_size` (16).
+[2024-02-14 12:13:41,558][trainer.accelerators.base_accelerator][INFO] - No checkpoint found, training from scratch
+[2024-02-14 12:13:41,599][trainer.accelerators.base_accelerator][INFO] - Initializing trackers
+[2024-02-14 12:13:43,632][trainer.accelerators.base_accelerator][INFO] - Training config:
+[2024-02-14 12:13:43,676][trainer.accelerators.base_accelerator][INFO] - {'accelerator': {'_target_': 'trainer.accelerators.deepspeed_accelerator.DeepSpeedAccelerator', 'output_dir': '${output_dir}', 'mixed_precision': <PrecisionType.BF16: 'bf16'>, 'gradient_accumulation_steps': 16, 'log_with': <LoggerType.WANDB: 'wandb'>, 'debug': {'activate': False, 'port': 5900}, 'seed': 42, 'resume_from_checkpoint': True, 'max_steps': 4000, 'num_epochs': 1, 'validate_steps': 100, 'eval_on_start': True, 'project_name': 'experiment', 'max_grad_norm': 1.0, 'save_steps': 100, 'metric_name': 'accuracy', 'metric_mode': <MetricMode.MAX: 'max'>, 'limit_num_checkpoints': 1, 'save_only_if_best': True, 'dynamo_backend': <DynamoBackend.NO: 'NO'>, 'keep_best_ckpts': True, 'deepspeed': {'fp16': {'enabled': False}, 'bf16': {'enabled': True}, 'optimizer': {'type': 'AdamW', 'params': {'lr': 'auto', 'weight_decay': 'auto', 'torch_adam': True, 'adam_w_mode': True}}, 'scheduler': {'type': 'WarmupDecayLR', 'params': {'warmup_min_lr': 'auto', 'warmup_max_lr': 'auto', 'warmup_num_steps': 'auto', 'total_num_steps': 'auto'}}, 'zero_optimization': {'stage': 2, 'allgather_partitions': True, 'allgather_bucket_size': 200000000.0, 'overlap_comm': True, 'reduce_scatter': True, 'reduce_bucket_size': 500000000, 'contiguous_gradients': True}, 'gradient_accumulation_steps': 16, 'gradient_clipping': 1.0, 'steps_per_print': 1, 'train_batch_size': 'auto', 'train_micro_batch_size_per_gpu': 'auto', 'wall_clock_breakdown': False}, 'deepspeed_final': {'fp16': {'enabled': False}, 'bf16': {'enabled': True}, 'optimizer': {'type': 'AdamW', 'params': {'lr': 'auto', 'weight_decay': 'auto', 'torch_adam': True, 'adam_w_mode': True}}, 'scheduler': {'type': 'WarmupDecayLR', 'params': {'warmup_min_lr': 'auto', 'warmup_max_lr': 'auto', 'warmup_num_steps': 'auto', 'total_num_steps': 'auto'}}, 'zero_optimization': {'stage': 2, 'allgather_partitions': True, 'allgather_bucket_size': 200000000.0, 'overlap_comm': True, 'reduce_scatter': True, 'reduce_bucket_size': 500000000, 'contiguous_gradients': True}, 'gradient_accumulation_steps': 16, 'gradient_clipping': 1.0, 'steps_per_print': inf, 'train_batch_size': 'auto', 'train_micro_batch_size_per_gpu': 'auto', 'wall_clock_breakdown': False}}, 'task': {'limit_examples_to_wandb': 10, '_target_': 'trainer.tasks.clip_task.CLIPTask', 'pretrained_model_name_or_path': '${model.pretrained_model_name_or_path}', 'label_0_column_name': '${dataset.label_0_column_name}', 'label_1_column_name': '${dataset.label_1_column_name}', 'input_ids_column_name': '${dataset.input_ids_column_name}', 'pixels_0_column_name': '${dataset.pixels_0_column_name}', 'pixels_1_column_name': '${dataset.pixels_1_column_name}'}, 'model': {'_target_': 'trainer.models.clip_model.CLIPModel', 'pretrained_model_name_or_path': 'laion/CLIP-ViT-H-14-laion2B-s32B-b79K'}, 'criterion': {'_target_': 'trainer.criterions.clip_criterion.CLIPCriterion', 'is_distributed': True, 'label_0_column_name': '${dataset.label_0_column_name}', 'label_1_column_name': '${dataset.label_1_column_name}', 'input_ids_column_name': '${dataset.input_ids_column_name}', 'pixels_0_column_name': '${dataset.pixels_0_column_name}', 'pixels_1_column_name': '${dataset.pixels_1_column_name}', 'num_examples_per_prompt_column_name': '${dataset.num_examples_per_prompt_column_name}', 'in_batch_negatives': False}, 'dataset': {'train_split_name': 'train', 'valid_split_name': 'validation', 'test_split_name': 'test', 'batch_size': 16, 'num_workers': 2, 'drop_last': True, '_target_': 'trainer.datasetss.clip_hf_dataset.CLIPHFDataset', 'dataset_name': 'mehdidc/compositionality', 'dataset_config_name': 'null', 'from_disk': False, 'cache_dir': '/home/vu214/rds/rds-shared-data-HM7VddDwcug/shared-datasets/reward_models_data', 'caption_column_name': 'caption', 'input_ids_column_name': 'input_ids', 'image_0_column_name': 'jpg_0', 'image_1_column_name': 'jpg_1', 'label_0_column_name': 'label_0', 'label_1_column_name': 'label_1', 'are_different_column_name': 'are_different', 'has_label_column_name': 'has_label', 'pixels_0_column_name': 'pixel_values_0', 'pixels_1_column_name': 'pixel_values_1', 'num_examples_per_prompt_column_name': 'num_example_per_prompt', 'keep_only_different': False, 'keep_only_with_label': False, 'keep_only_with_label_in_non_train': True, 'dataset_size_train': None, 'dataset_size_validation': None, 'dataset_size_test': None, 'processor': {'_target_': 'transformers.AutoProcessor.from_pretrained', 'pretrained_model_name_or_path': '${model.pretrained_model_name_or_path}'}, 'limit_examples_per_prompt': -1, 'caption_sources': None, 'model_sources': None, 'origin': None, 'only_on_best': False}, 'optimizer': {'_target_': 'trainer.optimizers.dummy_optimizer.BaseDummyOptim', 'lr': 3e-06, 'weight_decay': 0.3}, 'lr_scheduler': {'_target_': 'trainer.lr_schedulers.dummy_lr_scheduler.instantiate_dummy_lr_scheduler', 'lr': '${optimizer.lr}', 'lr_warmup_steps': 500, 'total_num_steps': '${accelerator.max_steps}'}, 'debug': {'activate': False, 'port': 5900}, 'output_dir': '/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering'}
+[2024-02-14 12:13:43,728][trainer.accelerators.base_accelerator][INFO] - nvidia-smi stats: {'gpu_0_mem_used_gb': 23.107421875}
+[2024-02-14 12:13:43,729][trainer.accelerators.base_accelerator][INFO] - ***** Running training *****
+[2024-02-14 12:13:43,729][trainer.accelerators.base_accelerator][INFO] -   Instantaneous batch size per device = 16
+[2024-02-14 12:13:43,729][trainer.accelerators.base_accelerator][INFO] -   Total train batch size (w. parallel, distributed & accumulation) = 256
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Gradient Accumulation steps = 16
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Total warmup steps = 500
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Total training steps = 64000
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Total epochs = 1
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Steps per epoch = 89327
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Update steps per epoch = 5583
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Total optimization steps = 4000
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   Mixed precision = bf16
+[2024-02-14 12:13:43,730][trainer.accelerators.base_accelerator][INFO] -   World size = 1
+[2024-02-14 12:13:43,731][__main__][INFO] - task: CLIPTask
+[2024-02-14 12:13:43,732][__main__][INFO] - model: DeepSpeedEngine
+[2024-02-14 12:13:43,734][__main__][INFO] - num. model params: 986M
+[2024-02-14 12:13:43,736][__main__][INFO] - num. model trainable params: 986M
+[2024-02-14 12:13:43,736][__main__][INFO] - criterion: CLIPCriterion
+[2024-02-14 12:13:43,737][__main__][INFO] - num. train examples: 1429230
+[2024-02-14 12:13:43,737][__main__][INFO] - num. valid examples: 25769
+[2024-02-14 12:13:43,737][__main__][INFO] - num. test examples: 81505
+[2024-02-14 12:13:44,163][__main__][INFO] - *** Evaluating validation ***
+[2024-02-14 12:13:44,163][trainer.tasks.clip_task][INFO] - Running clip score...
+[2024-02-14 12:21:16,273][trainer.tasks.base_task][INFO] - Gathering dict from all processes...
+[2024-02-14 12:21:16,277][trainer.accelerators.base_accelerator][INFO] - Metrics: {'accuracy': 0.595812798323567, 'num_samples': 25769}
