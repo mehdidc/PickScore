@@ -11,6 +11,8 @@ from transformers import AutoTokenizer
 from trainer.accelerators.base_accelerator import BaseAccelerator
 from trainer.tasks.base_task import BaseTaskConfig, BaseTask
 
+from tqdm import tqdm
+
 logger = get_logger(__name__)
 
 
@@ -73,23 +75,24 @@ class CLIPTask(BaseTask):
     def run_inference(self, model, criterion, dataloader):
         eval_dict = collections.defaultdict(list)
         logger.info("Running clip score...")
-        for batch in dataloader:
+        for batch in tqdm(dataloader):
             image_0_probs, image_1_probs = self.valid_step(model, criterion, batch)
             agree_on_0 = (image_0_probs > image_1_probs) * batch[self.cfg.label_0_column_name]
             agree_on_1 = (image_0_probs < image_1_probs) * batch[self.cfg.label_1_column_name]
             is_correct = agree_on_0 + agree_on_1
             eval_dict["is_correct"] += is_correct.tolist()
-            eval_dict["captions"] += self.tokenizer.batch_decode(
-                batch[self.cfg.input_ids_column_name],
-                skip_special_tokens=True
-            )
-            eval_dict["image_0"] += self.pixel_values_to_pil_images(batch[self.cfg.pixels_0_column_name])
-            eval_dict["image_1"] += self.pixel_values_to_pil_images(batch[self.cfg.pixels_1_column_name])
-            eval_dict["prob_0"] += image_0_probs.tolist()
-            eval_dict["prob_1"] += image_1_probs.tolist()
+            ## HACK: remove the additional logging of metrics to speed up training
+            # eval_dict["captions"] += self.tokenizer.batch_decode(
+            #     batch[self.cfg.input_ids_column_name],
+            #     skip_special_tokens=True
+            # )
+            # eval_dict["image_0"] += self.pixel_values_to_pil_images(batch[self.cfg.pixels_0_column_name])
+            # eval_dict["image_1"] += self.pixel_values_to_pil_images(batch[self.cfg.pixels_1_column_name])
+            # eval_dict["prob_0"] += image_0_probs.tolist()
+            # eval_dict["prob_1"] += image_1_probs.tolist()
 
-            eval_dict["label_0"] += batch[self.cfg.label_0_column_name].tolist()
-            eval_dict["label_1"] += batch[self.cfg.label_1_column_name].tolist()
+            # eval_dict["label_0"] += batch[self.cfg.label_0_column_name].tolist()
+            # eval_dict["label_1"] += batch[self.cfg.label_1_column_name].tolist()
 
         return eval_dict
 
@@ -101,6 +104,7 @@ class CLIPTask(BaseTask):
             "accuracy": sum(eval_dict["is_correct"]) / len(eval_dict["is_correct"]),
             "num_samples": len(eval_dict["is_correct"])
         }
-        if LoggerType.WANDB == self.accelerator.cfg.log_with:
-            self.log_to_wandb(eval_dict)
+        ## HACK: for now not logging predictions to W&B to save time
+        # if LoggerType.WANDB == self.accelerator.cfg.log_with:
+        #     self.log_to_wandb(eval_dict)
         return metrics

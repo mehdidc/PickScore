@@ -169,6 +169,7 @@ class BaseAccelerator(abc.ABC):
             self.accelerator.init_trackers(self.cfg.project_name, log_cfg)
             logger.info("Training config:")
             print_config(cfg)
+            logger.info(str(cfg))
         logger.info(get_nvidia_smi_gpu_memory_stats_str())
         self.pre_training_log(cfg)
         self.progress_bar = tqdm(range(self.cfg.max_steps * self.cfg.gradient_accumulation_steps), disable=not self.accelerator.is_main_process)
@@ -191,7 +192,9 @@ class BaseAccelerator(abc.ABC):
             self.accelerator.log(data, step=self.global_step)
 
     def recalc_train_length_after_prepare(self, num_batches):
+        logger.info('Total training batches: {}'.format(num_batches))
         num_update_steps_per_epoch = math.ceil(num_batches / self.cfg.gradient_accumulation_steps)
+        logger.info('Number of update steps per epoch: {}'.format(num_update_steps_per_epoch))
         if self.cfg.max_steps is None:
             self.cfg.max_steps = self.cfg.num_epochs * num_update_steps_per_epoch
         self.num_update_steps_per_epoch = num_update_steps_per_epoch
@@ -303,18 +306,19 @@ class BaseAccelerator(abc.ABC):
     def save_training_stage(self, save_dir):
         json.dump(self.training_stage, open(os.path.join(save_dir, TRAINING_STAGE_PATH), "w"), indent=4)
 
-    def save_checkpoint(self):
-        if self.cfg.save_only_if_best:
-            all_ckpts = self.get_all_ckpts()
-            for ckpt in all_ckpts:
-                training_stage = json.load(open(os.path.join(ckpt, TRAINING_STAGE_PATH)))
-                metric_val = training_stage["metrics"][self.cfg.metric_name]
-                cur_metric_val = self.training_stage["metrics"][self.cfg.metric_name]
-                if (self.cfg.metric_mode == MetricMode.MIN and metric_val < cur_metric_val) or \
-                        (self.cfg.metric_mode == MetricMode.MAX and metric_val > cur_metric_val):
-                    logger.info(
-                        f"Metric {self.cfg.metric_name}={cur_metric_val} is not better than {metric_val} of {ckpt}, skipping checkpoint")
-                    return
+    def save_checkpoint(self, force_save=False):
+        if force_save == False:
+            if self.cfg.save_only_if_best:
+                all_ckpts = self.get_all_ckpts()
+                for ckpt in all_ckpts:
+                    training_stage = json.load(open(os.path.join(ckpt, TRAINING_STAGE_PATH)))
+                    metric_val = training_stage["metrics"][self.cfg.metric_name]
+                    cur_metric_val = self.training_stage["metrics"][self.cfg.metric_name]
+                    if (self.cfg.metric_mode == MetricMode.MIN and metric_val < cur_metric_val) or \
+                            (self.cfg.metric_mode == MetricMode.MAX and metric_val > cur_metric_val):
+                        logger.info(
+                            f"Metric {self.cfg.metric_name}={cur_metric_val} is not better than {metric_val} of {ckpt}, skipping checkpoint")
+                        return
         self.cleanup_checkpoints()
         self.accelerator.wait_for_everyone()
         save_dir = os.path.join(self.cfg.output_dir, f"checkpoint-gstep{self.global_step}")

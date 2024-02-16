@@ -143,6 +143,8 @@ def main(cfg: TrainerConfig) -> None:
                 accelerator.update_global_step(train_loss)
                 train_loss = 0.0
 
+            # logger.info('debug: step: {}, epoch: {}, global_step: {}'.format(step, epoch, accelerator.global_step))
+
             if accelerator.global_step > 0:
                 lr = lr_scheduler.get_last_lr()[0]
 
@@ -150,10 +152,11 @@ def main(cfg: TrainerConfig) -> None:
 
             if accelerator.should_end():
                 evaluate()
-                accelerator.save_checkpoint()
+                accelerator.save_checkpoint(force_save=True)
                 break
 
         if accelerator.should_end():
+            accelerator.save_checkpoint(force_save=True)
             break
 
         accelerator.update_epoch()

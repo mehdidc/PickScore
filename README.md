@@ -8,7 +8,33 @@ accelerate launch trainer/scripts/train.py +experiment=compositionality_example 
 
 This reads the config file in [trainer/conf/compositionality_example.yaml](trainer/conf/experiment/compositionality_example.yaml). 
 
+## Dataset statistics
+The entire compositionality reward model training dataset has 1,429,230 pairwise preference ratings.
+The distribution of different constituent sources for the training set is:
+| Source           | Count  |
+|-------------------|--------|
+| pickapic          | 959040 |
+| DiffusionDB       | 195221 |
+| coco              | 92332  |
+| coco_train_t2i    | 82535  |
+| snli_ve           | 72341  |
+| PartiPrompts      | 27600  |
+| cococon_train     | 83     |
+| pickapicon_train  | 78     |
+| **Total**         | **1429230** |
+``` &#8203;``【oaicite:0】``&#8203;
 
+## Running stuff on the cambridge cluster
+
+for debugging and using the small dataset split, run this:
+```bash
+accelerate launch --dynamo_backend no --gpu_ids all --num_processes 1  --num_machines 1 --use_deepspeed trainer/scripts/train.py +experiment=compositionality_example output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs
+```
+
+for full training run on 1 GPU on the entire compositionality dataset, run this:
+```bash
+accelerate launch --dynamo_backend no --gpu_ids all --num_processes 1  --num_machines 1 --use_deepspeed trainer/scripts/train.py +experiment=compositionality_full output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
+```
 
 # PickScore (original)
 This repository contains the code for the paper [Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation](https://arxiv.org/abs/2305.01569). 

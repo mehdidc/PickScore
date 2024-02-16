@@ -6,7 +6,7 @@ defaults:
 accelerator:
   project_name: experiment
   mixed_precision: BF16
-  gradient_accumulation_steps: 8
+  gradient_accumulation_steps: 16
   max_steps: 3000
   validate_steps: 500
 
@@ -15,17 +15,18 @@ output_dir: compositionality_example_output
 model:
   pretrained_model_name_or_path: laion/CLIP-ViT-H-14-laion2B-s32B-b79K
 
+task:
+  limit_examples_to_wandb: 5
+
 dataset:
-  # dataset_name: "mehdidc/compositionality-subsample"
   dataset_name: "mehdidc/compositionality"
   cache_dir: "/home/vu214/rds/rds-shared-data-HM7VddDwcug/shared-datasets/reward_models_data"
-  dataset_size_train: 5000
-  dataset_size_validation: 100
-  dataset_size_test: 100
+  # dataset_size_train: 100
+  # dataset_size_validation: 10
+  # dataset_size_test: 10
   train_split_name: train
   valid_split_name: validation
   test_split_name: test
   # caption_sources: ["pickapic"]
   # model_sources: ["stable-diffusion-xl-beta-v2-2-3", "stable-diffusion-xl-beta-v2-2-5-b", "yuvalkirstain/dreamlike-photoreal-2-flax", "stable-diffusion-xl-beta-v2-2-2", "stable-diffusion-xl-beta-v2-2-3-5", "stable-diffusion-xl-beta-v2-2-5-f", "stable-diffusion-xl-beta-v2-2-5-g", "stable-diffusion-xl-v2-2", "stable-diffusion-xl-beta-v2-2-5-e", "stabilityai/stable-diffusion-2-1"]
   batch_size: 32
- 
