@@ -22,7 +22,6 @@ The distribution of different constituent sources for the training set is:
 | cococon_train     | 83     |
 | pickapicon_train  | 78     |
 | **Total**         | **1429230** |
-``` &#8203;``【oaicite:0】``&#8203;
 
 ## Running stuff on the cambridge cluster
 
