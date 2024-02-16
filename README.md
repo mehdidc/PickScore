@@ -8,6 +8,22 @@ accelerate launch trainer/scripts/train.py +experiment=compositionality_example 
 
 This reads the config file in [trainer/conf/compositionality_example.yaml](trainer/conf/experiment/compositionality_example.yaml). 
 
+## Dataset statistics
+The entire compositionality reward model training dataset has 1,429,230 pairwise preference ratings.
+The distribution of different constituent sources for the training set is:
+| Source           | Count  |
+|-------------------|--------|
+| pickapic          | 959040 |
+| DiffusionDB       | 195221 |
+| coco              | 92332  |
+| coco_train_t2i    | 82535  |
+| snli_ve           | 72341  |
+| PartiPrompts      | 27600  |
+| cococon_train     | 83     |
+| pickapicon_train  | 78     |
+| **Total**         | **1429230** |
+``` &#8203;``【oaicite:0】``&#8203;
+
 ## Running stuff on the cambridge cluster
 
 for debugging and using the small dataset split, run this:

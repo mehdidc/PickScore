@@ -306,18 +306,19 @@ class BaseAccelerator(abc.ABC):
     def save_training_stage(self, save_dir):
         json.dump(self.training_stage, open(os.path.join(save_dir, TRAINING_STAGE_PATH), "w"), indent=4)
 
-    def save_checkpoint(self):
-        if self.cfg.save_only_if_best:
-            all_ckpts = self.get_all_ckpts()
-            for ckpt in all_ckpts:
-                training_stage = json.load(open(os.path.join(ckpt, TRAINING_STAGE_PATH)))
-                metric_val = training_stage["metrics"][self.cfg.metric_name]
-                cur_metric_val = self.training_stage["metrics"][self.cfg.metric_name]
-                if (self.cfg.metric_mode == MetricMode.MIN and metric_val < cur_metric_val) or \
-                        (self.cfg.metric_mode == MetricMode.MAX and metric_val > cur_metric_val):
-                    logger.info(
-                        f"Metric {self.cfg.metric_name}={cur_metric_val} is not better than {metric_val} of {ckpt}, skipping checkpoint")
-                    return
+    def save_checkpoint(self, force_save=False):
+        if force_save == False:
+            if self.cfg.save_only_if_best:
+                all_ckpts = self.get_all_ckpts()
+                for ckpt in all_ckpts:
+                    training_stage = json.load(open(os.path.join(ckpt, TRAINING_STAGE_PATH)))
+                    metric_val = training_stage["metrics"][self.cfg.metric_name]
+                    cur_metric_val = self.training_stage["metrics"][self.cfg.metric_name]
+                    if (self.cfg.metric_mode == MetricMode.MIN and metric_val < cur_metric_val) or \
+                            (self.cfg.metric_mode == MetricMode.MAX and metric_val > cur_metric_val):
+                        logger.info(
+                            f"Metric {self.cfg.metric_name}={cur_metric_val} is not better than {metric_val} of {ckpt}, skipping checkpoint")
+                        return
         self.cleanup_checkpoints()
         self.accelerator.wait_for_everyone()
         save_dir = os.path.join(self.cfg.output_dir, f"checkpoint-gstep{self.global_step}")

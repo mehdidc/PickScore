@@ -10,7 +10,7 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job:
-#SBATCH -J sample_pickscore_training_compositionality
+#SBATCH -J pickscore_training_compositionality_full_no_filtering
 #! Which project should be charged (NB Wilkes2 projects end in '-GPU'):
 #SBATCH -A T2-CS151-GPU
 #! How many whole nodes should be allocated?

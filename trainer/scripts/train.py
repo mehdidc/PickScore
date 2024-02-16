@@ -117,7 +117,6 @@ def main(cfg: TrainerConfig) -> None:
                 accelerator.update_progbar_step()
                 continue
 
-            ## HACK: for now removing evaluation to ensure faster training 
             if accelerator.should_eval():
                 evaluate()
 
@@ -153,10 +152,11 @@ def main(cfg: TrainerConfig) -> None:
 
             if accelerator.should_end():
                 evaluate()
-                accelerator.save_checkpoint()
+                accelerator.save_checkpoint(force_save=True)
                 break
 
         if accelerator.should_end():
+            accelerator.save_checkpoint(force_save=True)
             break
 
         accelerator.update_epoch()

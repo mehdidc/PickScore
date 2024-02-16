@@ -112,12 +112,12 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - +experiment=compositionality_full
-    - output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
+    - +experiment=compositionality_example
+    - output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_test
   job:
     name: train
     chdir: null
-    override_dirname: +experiment=compositionality_full,output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
+    override_dirname: +experiment=compositionality_example,output_dir=/rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_test
     id: ???
     num: ???
     config_name: config
@@ -144,7 +144,7 @@ hydra:
       provider: schema
     output_dir: /home/vu214/PickScore
     choices:
-      experiment: compositionality_full
+      experiment: compositionality_example
       lr_scheduler: dummy
       optimizer: dummy
       dataset: clip

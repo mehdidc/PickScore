@@ -158,7 +158,9 @@ class CLIPHFDataset(BaseDataset):
         dataset_size = getattr(self.cfg, f"dataset_size_{self.split}", None)
         if dataset_size is not None:
             logger.info(f"Keeping only {dataset_size} examples")
-            self.dataset = Dataset.from_pandas(self.dataset.to_pandas().iloc[:dataset_size])
+            # this way of filtering is much quicker than converting to a pandas df
+            self.dataset = self.dataset.select(list(range(dataset_size)))
+            # self.dataset = Dataset.from_pandas(self.dataset.to_pandas().iloc[:dataset_size])
             logger.info(f"Kept {len(self.dataset)} examples from {self.split} dataset")
 
 
@@ -179,6 +181,13 @@ class CLIPHFDataset(BaseDataset):
                 cache_dir=self.cfg.cache_dir,
                 split=split
             )
+
+        ## Get dataset statistics
+        # import numpy as np
+        # df = np.asarray(dataset['caption_source'])
+        # print(np.unique(df, return_counts=True))
+        # print(len(df))
+
         return dataset
 
     def tokenize(self, example):

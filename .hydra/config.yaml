@@ -2,7 +2,7 @@ accelerator:
   _target_: trainer.accelerators.deepspeed_accelerator.DeepSpeedAccelerator
   output_dir: ${output_dir}
   mixed_precision: BF16
-  gradient_accumulation_steps: 16
+  gradient_accumulation_steps: 8
   log_with: WANDB
   debug:
     activate: false
@@ -11,7 +11,7 @@ accelerator:
   resume_from_checkpoint: true
   max_steps: 3000
   num_epochs: 10
-  validate_steps: 100
+  validate_steps: 500
   eval_on_start: true
   project_name: experiment
   max_grad_norm: 1.0
@@ -57,7 +57,7 @@ accelerator:
     wall_clock_breakdown: false
   deepspeed_final: null
 task:
-  limit_examples_to_wandb: 5
+  limit_examples_to_wandb: 50
   _target_: trainer.tasks.clip_task.CLIPTask
   pretrained_model_name_or_path: ${model.pretrained_model_name_or_path}
   label_0_column_name: ${dataset.label_0_column_name}
@@ -104,9 +104,9 @@ dataset:
   keep_only_different: false
   keep_only_with_label: false
   keep_only_with_label_in_non_train: true
-  dataset_size_train: null
-  dataset_size_validation: null
-  dataset_size_test: null
+  dataset_size_train: 5000
+  dataset_size_validation: 100
+  dataset_size_test: 100
   processor:
     _target_: transformers.AutoProcessor.from_pretrained
     pretrained_model_name_or_path: ${model.pretrained_model_name_or_path}
@@ -127,4 +127,4 @@ lr_scheduler:
 debug:
   activate: false
   port: 5900
-output_dir: /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_full_dataset_no_filtering
+output_dir: /rds/project/rds-lSmP1cwRttU/vu214/reward-models-compositionality-resources/pickscore_trained_model_outputs_test

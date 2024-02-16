@@ -11,7 +11,7 @@ accelerator:
   resume_from_checkpoint: true
   max_steps: 3000
   num_epochs: 10
-  validate_steps: 100
+  validate_steps: 500
   eval_on_start: true
   project_name: experiment
   max_grad_norm: 1.0
